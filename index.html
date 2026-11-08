@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Privasi: app hanya boleh menghubungi dirinya sendiri. Tidak ada upload ke server mana pun. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; img-src 'self' blob: data:; media-src 'self' blob:; frame-src blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; object-src 'none'; form-action 'none'">
+<meta name="theme-color" content="#0b1220">
+<title>Rapikan</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Rapikan">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+:root{--bg:#0b1220;--card:#162033;--card2:#1f2b42;--tx:#eef2f7;--mut:#93a1b8;--acc:#38bdf8;--ok:#22c55e;--warn:#f59e0b;--bad:#ef4444}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:-apple-system,system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+header{padding:calc(14px + env(safe-area-inset-top)) 16px 2px;max-width:640px;margin:0 auto}
+h1{margin:0;font-size:22px}
+.sub{color:var(--mut);font-size:13px;margin-top:2px}
+main{padding:10px 14px;max-width:640px;margin:0 auto}
+.card{background:var(--card);border-radius:16px;padding:14px;margin-bottom:12px}
+h2{font-size:16px;margin:0 0 8px}
+p{margin:6px 0}
+.mut{color:var(--mut);font-size:13px}
+button,.btn{font:inherit;font-size:15px;border:0;border-radius:12px;padding:12px 14px;background:var(--card2);color:var(--tx);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+button.pri,.btn.pri{background:var(--acc);color:#05202e;font-weight:700}
+button.bad{background:var(--bad);color:#fff;font-weight:700}
+button.sm{padding:8px 10px;font-size:13px;border-radius:10px}
+button:disabled{opacity:.4}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.row>*{flex:1 1 auto}
+.full{width:100%}
+label.pick{display:block;text-align:center;border:2px dashed #34445f;border-radius:14px;padding:20px;color:var(--mut);cursor:pointer}
+label.pick b{color:var(--tx);display:block;font-size:16px;margin-bottom:4px}
+input[type=file]{display:none}
+select,input[type=text],input[type=search]{font:inherit;font-size:15px;background:var(--card2);color:var(--tx);border:1px solid #34445f;border-radius:10px;padding:9px;width:100%}
+input[type=range]{width:100%}
+.field{margin:8px 0}
+.field>span{display:block;font-size:13px;color:var(--mut);margin-bottom:4px}
+.seg{display:flex;background:var(--card2);border-radius:10px;padding:3px;gap:3px}
+.seg button{flex:1;padding:8px 4px;font-size:13px;background:transparent}
+.seg button.on{background:var(--acc);color:#05202e;font-weight:700}
+nav{position:fixed;left:0;right:0;bottom:0;background:#0e1729ee;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid #23314a;display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom));z-index:5}
+nav button{flex:1;flex-direction:column;background:transparent;font-size:11px;padding:6px 2px;color:var(--mut);gap:2px}
+nav button .ic{font-size:21px;line-height:1}
+nav button.on{color:var(--acc)}
+.list{display:flex;flex-direction:column;gap:6px}
+.item{display:flex;align-items:center;gap:10px;background:var(--card2);border-radius:12px;padding:8px}
+.item .th{width:48px;height:48px;border-radius:8px;background:#0b1220 center/cover no-repeat;flex:0 0 48px;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden}
+.item .th img{width:100%;height:100%;object-fit:cover}
+.item .meta{flex:1;min-width:0}
+.item .nm{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .dt{font-size:12px;color:var(--mut)}
+.item input[type=checkbox]{width:22px;height:22px;flex:0 0 22px;accent-color:var(--acc)}
+.good{color:var(--ok)}.badtx{color:var(--bad)}.warntx{color:var(--warn)}
+.bar{height:8px;background:var(--card2);border-radius:6px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--acc);width:0;transition:width .2s}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.stat div{background:var(--card2);border-radius:12px;padding:10px 4px}
+.stat b{display:block;font-size:18px}
+.stat span{font-size:11px;color:var(--mut)}
+.grp{border:1px solid #2b3a55;border-radius:12px;padding:8px;margin-bottom:8px}
+.grp h3{font-size:13px;margin:0 0 6px;color:var(--mut);font-weight:600}
+.crumb{display:flex;gap:4px;flex-wrap:wrap;font-size:14px;margin-bottom:8px}
+.crumb a{color:var(--acc);cursor:pointer}
+.hide{display:none!important}
+.modal{position:fixed;inset:0;background:#000c;z-index:20;display:flex;flex-direction:column;padding:calc(10px + env(safe-area-inset-top)) 10px calc(10px + env(safe-area-inset-bottom))}
+.modal .mtop{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.modal .mtop .t{flex:1;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.modal .mbody{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;background:#000;border-radius:12px}
+.modal .mbody img,.modal .mbody video{max-width:100%;max-height:100%}
+.modal .mbody iframe{width:100%;height:100%;border:0;background:#fff}
+.modal .mbody pre{white-space:pre-wrap;word-break:break-word;color:#ddd;padding:12px;align-self:flex-start;margin:0;font-size:13px}
+.modal .mbot{display:flex;gap:8px;margin-top:8px}
+.modal .mbot>*{flex:1}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#e2e8f0;color:#0b1220;padding:10px 16px;border-radius:12px;font-size:14px;z-index:30;max-width:90%;text-align:center}
+ul.tips{margin:6px 0;padding-left:18px;font-size:14px}
+ul.tips li{margin:4px 0}
+.selbar{position:sticky;top:0;z-index:3;background:var(--card);padding:6px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>Rapikan</h1>
+  <div class="sub">File, bersih-bersih &amp; kompres — semua diproses di HP, <b>tanpa upload</b>.</div>
+</header>
+
+<main>
+<!-- ================= KOMPRES ================= -->
+<section id="tab-kompres">
+  <div class="card">
+    <h2>Kompres foto &amp; video</h2>
+    <label class="pick" for="kIn"><b>＋ Pilih foto / video</b>dari Foto atau File. Boleh banyak sekaligus.</label>
+    <input id="kIn" type="file" accept="image/*,video/*" multiple>
+    <div id="kPicked" class="mut" style="margin-top:8px"></div>
+  </div>
+  <div class="card">
+    <h2>Pengaturan</h2>
+    <div class="field"><span>Foto — ukuran maksimal (sisi terpanjang)</span>
+      <div class="seg" id="kImgMax"><button data-v="0">Asli</button><button data-v="3000">3000</button><button data-v="2048" class="on">2048</button><button data-v="1280">1280</button></div></div>
+    <div class="field"><span>Foto — kualitas: <b id="kQv">75</b>%</span><input id="kQ" type="range" min="40" max="95" value="75"></div>
+    <div class="field"><span>Video — resolusi</span>
+      <div class="seg" id="kVidRes"><button data-v="1080">1080p</button><button data-v="720" class="on">720p</button><button data-v="480">480p</button></div></div>
+    <div class="field"><span>Video — kualitas</span>
+      <div class="seg" id="kVidBr"><button data-v="1">Hemat</button><button data-v="2" class="on">Sedang</button><button data-v="3">Tinggi</button></div></div>
+    <p class="mut">Video dikompres sambil diputar (butuh waktu ±sama dengan durasi video). Jangan kunci layar / pindah app selama proses.</p>
+    <button id="kGo" class="pri full" disabled>Mulai kompres</button>
+  </div>
+  <div class="card hide" id="kResCard">
+    <h2>Hasil</h2>
+    <div class="bar"><i id="kBar"></i></div>
+    <div id="kStatus" class="mut" style="margin:6px 0"></div>
+    <div class="stat" id="kStat"></div>
+    <div class="list" id="kList" style="margin-top:10px"></div>
+    <div class="row" style="margin-top:10px">
+      <button id="kShare" class="pri">Simpan / Bagikan</button>
+      <button id="kVault">Simpan ke Brankas</button>
+    </div>
+    <p class="mut">"Simpan / Bagikan" membuka menu iPhone → pilih <b>Simpan Gambar/Video</b> (ke Foto) atau <b>Simpan ke File</b>. Setelah itu hapus versi lama di Foto supaya ruang benar-benar lega.</p>
+  </div>
+</section>
+
+<!-- ================= BERSIHKAN ================= -->
+<section id="tab-bersih" class="hide">
+  <div class="card">
+    <h2>Cari sampah</h2>
+    <p class="mut">Pilih banyak foto/video/file. App mencari <b>duplikat persis</b>, <b>foto mirip</b>, <b>screenshot</b>, dan <b>file terbesar</b>. Semua dianalisis di HP.</p>
+    <div class="seg" id="bSrc" style="margin:8px 0"><button data-v="pick" class="on">Dari Foto/File</button><button data-v="vault">Isi Brankas</button></div>
+    <label class="pick" for="bIn" id="bPickLbl"><b>＋ Pilih file untuk diperiksa</b>Tips: di pemilih Foto, ketuk "Pilih" lalu geser untuk pilih banyak.</label>
+    <input id="bIn" type="file" accept="image/*,video/*" multiple>
+    <button id="bScanVault" class="pri full hide">Periksa isi Brankas</button>
+  </div>
+  <div class="card hide" id="bResCard">
+    <div class="bar"><i id="bBar"></i></div>
+    <div id="bStatus" class="mut" style="margin:6px 0"></div>
+    <div class="stat" id="bStat"></div>
+  </div>
+  <div class="card hide" id="bGroups">
+    <div class="selbar row">
+      <div id="bSelInfo" class="mut"></div>
+      <button class="sm" id="bAct1">Kompres yang dipilih</button>
+      <button class="sm bad hide" id="bDel">Hapus dari Brankas</button>
+    </div>
+    <div id="bOut"></div>
+    <p class="mut" id="bNote"></p>
+  </div>
+</section>
+
+<!-- ================= FILE / BRANKAS ================= -->
+<section id="tab-file" class="hide">
+  <div class="card">
+    <div class="row" style="margin-bottom:8px">
+      <h2 style="margin:0">Brankas File</h2>
+      <span id="fUse" class="mut" style="text-align:right"></span>
+    </div>
+    <div class="crumb" id="fCrumb"></div>
+    <div class="row" style="margin-bottom:8px">
+      <label class="btn pri" for="fIn">＋ Impor</label>
+      <input id="fIn" type="file" multiple>
+      <button id="fNewDir">＋ Folder</button>
+      <button id="fSelMode">Pilih</button>
+    </div>
+    <div class="row" style="margin-bottom:8px">
+      <input id="fSearch" type="search" placeholder="Cari nama file…" style="flex:3">
+      <select id="fSort" style="flex:2"><option value="name">Nama</option><option value="date">Terbaru</option><option value="size">Terbesar</option></select>
+    </div>
+    <div class="row hide" id="fSelBar" style="margin-bottom:8px">
+      <button class="sm" id="fSelAll">Semua</button>
+      <button class="sm" id="fMove">Pindah</button>
+      <button class="sm" id="fShareSel">Bagikan</button>
+      <button class="sm bad" id="fDelSel">Hapus</button>
+    </div>
+    <div class="list" id="fList"></div>
+    <p class="mut" id="fEmpty"></p>
+  </div>
+</section>
+
+<!-- ================= INFO ================= -->
+<section id="tab-info" class="hide">
+  <div class="card">
+    <h2>Privasi</h2>
+    <ul class="tips">
+      <li>File <b>tidak pernah diupload</b>. App dikunci (Content-Security-Policy) sehingga tidak bisa mengirim data ke server mana pun.</li>
+      <li>Brankas disimpan di penyimpanan app di iPhone ini saja.</li>
+      <li>Setelah terpasang, app jalan <b>offline</b>.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Pasang di iPhone</h2>
+    <ul class="tips">
+      <li>Buka di <b>Safari</b> → tombol <b>Bagikan</b> → <b>Tambah ke Layar Utama</b>.</li>
+      <li>Buka dari ikon di layar utama (bukan dari tab Safari) supaya Brankas tidak dihapus otomatis oleh iOS.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Batasan (aturan iPhone)</h2>
+    <ul class="tips">
+      <li>App web <b>tidak bisa menghapus langsung</b> dari app Foto. Bersihkan → tandai → hapus manual di Foto (atau kompres dulu, simpan, lalu hapus aslinya).</li>
+      <li>Kompres foto menghapus data lokasi/EXIF (lebih privat).</li>
+      <li>Kompres video berjalan real-time; video panjang butuh waktu lama.</li>
+    </ul>
+  </div>
+  <div class="card"><h2>Penyimpanan</h2><div id="iUse" class="mut"></div><button id="iPersist" class="full" style="margin-top:8px">Minta penyimpanan permanen</button></div>
+  <p class="mut" style="text-align:center">Rapikan v1.0</p>
+</section>
+</main>
+
+<nav>
+  <button data-tab="kompres" class="on"><span class="ic">🗜️</span>Kompres</button>
+  <button data-tab="bersih"><span class="ic">🧹</span>Bersihkan</button>
+  <button data-tab="file"><span class="ic">🗂️</span>File</button>
+  <button data-tab="info"><span class="ic">ℹ️</span>Info</button>
+</nav>
+
+<div class="modal hide" id="modal">
+  <div class="mtop"><button class="sm" id="mClose">✕</button><div class="t" id="mTitle"></div></div>
+  <div class="mbody" id="mBody"></div>
+  <div class="mbot" id="mBot"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
