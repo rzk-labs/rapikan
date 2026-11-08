@@ -1,6 +1,6 @@
 # Rapikan
 
-PWA iPhone: **file manager (Brankas)**, **bersih-bersih** (duplikat, foto mirip, screenshot, file terbesar), dan **kompres foto/video**.
+PWA iPhone: tab **Langsung** = panduan Pintasan (Shortcuts) untuk akses langsung Foto/File + kompres + hapus asli; **file manager (Brankas)**, **bersih-bersih** (duplikat, foto mirip, screenshot, file terbesar), dan **kompres foto/video**.
 Semua diproses di perangkat — tidak ada upload (dikunci dengan Content-Security-Policy `connect-src 'self'`).
 
 - Live: https://rzk-labs.github.io/rapikan/

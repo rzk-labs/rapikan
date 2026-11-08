@@ -78,8 +78,8 @@ nav button.on{color:var(--acc)}
 .modal .mbot{display:flex;gap:8px;margin-top:8px}
 .modal .mbot>*{flex:1}
 .toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#e2e8f0;color:#0b1220;padding:10px 16px;border-radius:12px;font-size:14px;z-index:30;max-width:90%;text-align:center}
-ul.tips{margin:6px 0;padding-left:18px;font-size:14px}
-ul.tips li{margin:4px 0}
+ul.tips,ol.tips{margin:6px 0;padding-left:18px;font-size:14px}
+.tips li{margin:4px 0}
 .selbar{position:sticky;top:0;z-index:3;background:var(--card);padding:6px 0}
 </style>
 </head>
@@ -90,8 +90,65 @@ ul.tips li{margin:4px 0}
 </header>
 
 <main>
+<!-- ================= PINTASAN (akses langsung Foto & File) ================= -->
+<section id="tab-langsung">
+  <div class="card">
+    <h2>⚡ Akses langsung Foto &amp; File</h2>
+    <p class="mut">Pakai app <b>Pintasan (Shortcuts)</b> bawaan iPhone: langsung baca Foto/File, kompres di HP, simpan, lalu hapus aslinya. Tanpa upload, tanpa app baru. Buat sekali (±5 menit), selanjutnya tinggal ketuk.</p>
+    <p class="mut">Cara tambah aksi: di Pintasan ketuk <b>＋</b> → <b>Tambah Tindakan</b> → ketik nama aksi di kolom cari. Nama aksi ditulis Inggris (Indonesia kira-kira) — cari salah satunya.</p>
+  </div>
+
+  <div class="card">
+    <h2>1️⃣ Pintasan "Kompres Foto"</h2>
+    <ol class="tips">
+      <li><b>Select Photos</b> (Pilih Foto) → ketuk panah ›: <b>Select Multiple</b> ON, <b>Include</b>: Images.</li>
+      <li><b>Repeat with Each</b> (Ulangi dengan Setiap) → item di <i>Photos</i>.</li>
+      <li>Di dalam ulangi: <b>Resize Image</b> (Ubah Ukuran Gambar) → ganti <i>Size</i> jadi <b>Longest Edge</b> → <b>2048</b>. Input: <i>Repeat Item</i>.</li>
+      <li><b>Convert Image</b> (Konversi Gambar) → <b>JPEG</b>, Quality <b>70%</b>, <b>Preserve Metadata ON</b> (tanggal &amp; lokasi tetap).</li>
+      <li><b>Save to Photo Album</b> (Simpan ke Album Foto) → Recents.</li>
+      <li>Di bawah <b>End Repeat</b>: <b>Delete Photos</b> (Hapus Foto) → input <i>Photos</i> (hasil langkah 1).</li>
+      <li>Ketuk nama di atas → ganti jadi <b>Kompres Foto</b>.</li>
+    </ol>
+    <p class="mut">Hapus selalu minta konfirmasi iPhone dan masuk <b>Baru Dihapus</b> (30 hari) → aman. Ruang benar-benar lega setelah dikosongkan dari Baru Dihapus.</p>
+  </div>
+
+  <div class="card">
+    <h2>2️⃣ Pintasan "Kompres Video"</h2>
+    <ol class="tips">
+      <li><b>Select Photos</b> → Select Multiple ON, <b>Include</b>: Videos.</li>
+      <li><b>Repeat with Each</b> → item di <i>Photos</i>.</li>
+      <li>Di dalam ulangi: <b>Encode Media</b> (Enkode Media) → ketuk panah ›: <b>Size</b> = <b>1280×720</b> (lebih kecil: 960×540). Input: <i>Repeat Item</i>.</li>
+      <li><b>Save to Photo Album</b> → Recents.</li>
+      <li>Di bawah <b>End Repeat</b>: <b>Delete Photos</b> → input <i>Photos</i>.</li>
+      <li>Ganti nama jadi <b>Kompres Video</b>.</li>
+    </ol>
+    <p class="mut">Video hasil kompres tercatat bertanggal hari ini. Video 4K 1 menit (±400 MB) biasanya jadi ±60–90 MB. Jangan tutup Pintasan selama proses.</p>
+  </div>
+
+  <div class="card">
+    <h2>3️⃣ Biar 1 ketuk dari app Foto</h2>
+    <ol class="tips">
+      <li>Di pintasan → ketuk ⓘ (bawah) → <b>Show in Share Sheet</b> (Tampilkan di Lembar Bagikan) ON, tipe: Images/Media.</li>
+      <li>Ganti langkah 1 (<i>Select Photos</i>) dengan <b>Shortcut Input</b>; jika tak ada input → <b>Ask For</b> Photos.</li>
+      <li>Sekarang di Foto: pilih foto/video → <b>Bagikan</b> → <b>Kompres Foto/Video</b>.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>🧹 Bersih-bersih langsung (bawaan iPhone)</h2>
+    <ul class="tips">
+      <li><b>Duplikat</b>: Foto → Album → Utilitas → <b>Duplikat</b> → <b>Gabungkan</b>.</li>
+      <li><b>Screenshot</b>: Foto → Album → Jenis Media → <b>Jepretan Layar</b> → Pilih → hapus.</li>
+      <li><b>Video terbesar</b>: Pengaturan → Umum → <b>Penyimpanan iPhone</b> → Foto → Tinjau Video Pribadi (urut dari terbesar).</li>
+      <li><b>File besar</b>: app File → Telusuri → iPhone Saya → ⋯ → urutkan <b>Ukuran</b>.</li>
+      <li><b>App jarang dipakai</b>: Penyimpanan iPhone → <b>Alihkan App Tidak Digunakan</b>.</li>
+      <li>Terakhir: Foto → Album → <b>Baru Dihapus</b> → Hapus Semua.</li>
+    </ul>
+  </div>
+</section>
+
 <!-- ================= KOMPRES ================= -->
-<section id="tab-kompres">
+<section id="tab-kompres" class="hide">
   <div class="card">
     <h2>Kompres foto &amp; video</h2>
     <label class="pick" for="kIn"><b>＋ Pilih foto / video</b>dari Foto atau File. Boleh banyak sekaligus.</label>
@@ -205,12 +262,13 @@ ul.tips li{margin:4px 0}
     </ul>
   </div>
   <div class="card"><h2>Penyimpanan</h2><div id="iUse" class="mut"></div><button id="iPersist" class="full" style="margin-top:8px">Minta penyimpanan permanen</button></div>
-  <p class="mut" style="text-align:center">Rapikan v1.0</p>
+  <p class="mut" style="text-align:center">Rapikan v1.1</p>
 </section>
 </main>
 
 <nav>
-  <button data-tab="kompres" class="on"><span class="ic">🗜️</span>Kompres</button>
+  <button data-tab="langsung" class="on"><span class="ic">⚡</span>Langsung</button>
+  <button data-tab="kompres"><span class="ic">🗜️</span>Kompres</button>
   <button data-tab="bersih"><span class="ic">🧹</span>Bersihkan</button>
   <button data-tab="file"><span class="ic">🗂️</span>File</button>
   <button data-tab="info"><span class="ic">ℹ️</span>Info</button>
